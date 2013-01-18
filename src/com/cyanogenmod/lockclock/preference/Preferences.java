@@ -17,6 +17,7 @@
 package com.cyanogenmod.lockclock.preference;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
@@ -31,11 +32,34 @@ import android.widget.TextView;
 
 import com.cyanogenmod.lockclock.R;
 import com.cyanogenmod.lockclock.misc.Constants;
+import static com.cyanogenmod.lockclock.misc.Constants.PREF_NAME;
 
 import java.util.List;
 
-public class Preferences extends PreferenceActivity {
+public class Preferences extends PreferenceActivity
+        implements SharedPreferences.OnSharedPreferenceChangeListener {
+
     private static final String TAG = "LockClock Preferences";
+
+    private SharedPreferences mPreferences;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mPreferences = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mPreferences.registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mPreferences.unregisterOnSharedPreferenceChangeListener(this);
+    }
 
     @Override
     public void onBuildHeaders(List<Header> target) {
@@ -59,6 +83,13 @@ public class Preferences extends PreferenceActivity {
         } else {
             super.setListAdapter(new HeaderAdapter(this, getHeaders()));
         }
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        SharedPreferences.Editor editor = mPreferences.edit();
+        editor.putBoolean(Constants.PREFERENCES_CHANGED, true);
+        editor.commit();
     }
 
     public static class ClockFragment extends PreferenceFragment {

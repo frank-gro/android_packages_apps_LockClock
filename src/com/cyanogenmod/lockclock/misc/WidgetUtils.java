@@ -28,12 +28,7 @@ import com.cyanogenmod.lockclock.R;
 public class WidgetUtils {
     static final String TAG = "WidgetUtils";
 
-    //===============================================================================================
-    // Widget display and resizing related functionality
-    //===============================================================================================
-    /**
-     *  Decide whether to show the Weather panel
-     */
+    // Decide whether to show the Weather panel
     public static boolean canFitWeather(Context context, int id, boolean digitalClock) {
         Bundle options = AppWidgetManager.getInstance(context).getAppWidgetOptions(id);
         if (options == null) {
@@ -51,9 +46,7 @@ public class WidgetUtils {
         return (minHeightPx > neededSize);
     }
 
-    /**
-     *  Decide whether to show the Calendar panel
-     */
+    // Decide whether to show the Calendar panel
     public static boolean canFitCalendar(Context context, int id, boolean digitalClock) {
         Bundle options = AppWidgetManager.getInstance(context).getAppWidgetOptions(id);
         if (options == null) {
@@ -71,9 +64,7 @@ public class WidgetUtils {
         return (minHeightPx > neededSize);
     }
 
-    /**
-     *  Calculate the scale factor of the fonts in the widget
-     */
+    // Calculate the scale factor of the fonts in the widget
     public static float getScaleRatio(Context context, int id) {
         Bundle options = AppWidgetManager.getInstance(context).getAppWidgetOptions(id);
         if (options != null) {
