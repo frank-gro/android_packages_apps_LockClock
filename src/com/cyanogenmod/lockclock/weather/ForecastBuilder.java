@@ -139,8 +139,15 @@ public class ForecastBuilder {
       TimeZone MyTimezone = TimeZone.getDefault();
       Calendar calendar = new GregorianCalendar(MyTimezone);
 
+      int maxForecasts = 5;
+      int curForecast = 0;
+
       // Iterate through the forecasts
       for (DayForecast d : forecasts) {
+          curForecast += 1;
+          if (curForecast > maxForecasts)
+              break;
+
           // Load the views
           View forecastItem = inflater.inflate(R.layout.forecast_item, null);
 
